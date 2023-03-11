@@ -1,3 +1,5 @@
+import java.util.Collection;
+
 public class Product {
     protected int id;
     protected String name;
@@ -35,5 +37,9 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean matches(String search) {
+        return getName().contains(search);
     }
 }

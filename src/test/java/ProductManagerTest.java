@@ -68,4 +68,20 @@ public class ProductManagerTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
+    @Test // Проверка поиска товара по Автору
+    public void shouldSearchByAuthor() {
+        Product[] actual = manager.searchBy("Author 1");
+        Product[] expected = new Product[]{product1};
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test // Проверка поиска товара по производителю
+    public void shouldSearchByManufacturer() {
+        Product[] actual = manager.searchBy("manufacturer 1");
+        Product[] expected = new Product[]{product3};
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
 }
