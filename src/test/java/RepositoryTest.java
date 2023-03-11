@@ -31,7 +31,7 @@ public class RepositoryTest {
     }
 
     @Test // Проверка удаления товара по ИД
-    public void shouldRemoveToId() {
+    public void shouldRemoveById() {
         repo.save(product1);
         repo.save(product2);
         repo.save(product3);
@@ -42,5 +42,17 @@ public class RepositoryTest {
         Product[] expected = {product1, product3, product4, product5};
         Product[] actual = repo.getProduct();
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldRemoveByIdNotFoundException() {
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repo.removeById(5);
+        });
+
     }
 }

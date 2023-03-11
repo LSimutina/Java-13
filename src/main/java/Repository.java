@@ -18,6 +18,11 @@ public class Repository {
 
     // Удаление по ID
     public void removeById(int id) {
+        // Исключение
+        Product removeProduct=findById(id);
+        if (removeProduct == null) {
+            throw new NotFoundException(id);
+        }
         Product[] tmp = new Product[products.length - 1];
         int copyToIndex = 0;
         for (Product product : products) {
@@ -27,5 +32,14 @@ public class Repository {
             }
         }
         products = tmp;
+    }
+
+    public Product findById(int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
     }
 }
