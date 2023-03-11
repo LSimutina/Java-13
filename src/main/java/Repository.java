@@ -3,6 +3,12 @@ public class Repository {
 
     // Добавление товара в массив Product[]
     public void save(Product product) {
+        // Исключение
+        if (this.findById(product.getId()) != null) {
+            throw new AlreadyExistsException(
+                    "Element with id: " + product.getId() + " already exists"
+            );
+        }
         Product[] tmp = new Product[products.length + 1];
         for (int i = 0; i < products.length; i++) {
             tmp[i] = products[i];
@@ -19,8 +25,7 @@ public class Repository {
     // Удаление по ID
     public void removeById(int id) {
         // Исключение
-        Product removeProduct=findById(id);
-        if (removeProduct == null) {
+        if (this.findById(id) == null) {
             throw new NotFoundException(id);
         }
         Product[] tmp = new Product[products.length - 1];

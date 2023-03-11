@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class RepositoryTest {
@@ -10,6 +11,7 @@ public class RepositoryTest {
     Product product3 = new Product(3, "Book 3", 200);
     Product product4 = new Product(4, "Book 4", 1_000);
     Product product5 = new Product(5, "Book 5", 2_500);
+    Product product6 = new Product(2, "Book 6", 4_500);
 
     @Test // Проверка добавления товаров и вывод массива
     public void shouldSaveProduct() {
@@ -21,6 +23,17 @@ public class RepositoryTest {
         Product[] actual = repo.getProduct();
 
         Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test // Проверка добавления товаров и вывод массива
+    public void shouldSaveProductAlreadyExistsException() {
+        repo.save(product1);
+        repo.save(product2);
+        repo.save(product3);
+
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repo.save(product6);
+        });
     }
 
     @Test // Проверка добавления товаров и вывод массива
@@ -46,13 +59,9 @@ public class RepositoryTest {
 
     @Test
     public void shouldRemoveByIdNotFoundException() {
-        repo.save(product1);
-        repo.save(product2);
-        repo.save(product3);
 
         Assertions.assertThrows(NotFoundException.class, () -> {
             repo.removeById(5);
         });
-
     }
 }
